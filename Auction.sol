@@ -3,8 +3,8 @@
 // Date: 2025-01-09
 // Course@School: DV2632: Trusted Systems @ BTH.se 
 // ---------------------------------------------------
-// This is a crowdfunding contract where users can contribute ETH to reach the set target goal.
-// (Be careful!) Only the contract creator (master) can withdraw the funds once the goal is met. 
+// This is an auction contract where participants can place bids and withdraw if outbid. 
+// (Caution!) Only the contract creator (master) can end the auction and claim the highest bid.
 // ---------------------------------------------------
 
 // SPDX-License-Identifier: MIT
@@ -14,14 +14,14 @@ pragma solidity ^0.8.0;
 /// @notice This contract uses an auction system where bidders can place and withdraw bids
 contract Auction {
 
-    /// *** VARIBLES ***
+    /// *** --- VARIBLES --- ***
     address public master; /// @dev Master address that controls the auction
     address public topAddress; /// Address of the current highest bidder
     uint256 public topBid; /// Current highest bid amount in wei
     bool public hasEnded; /// indicating if the auction has concluded
     mapping(address => uint256) public bids; /// Mapping to track withdrawable bids for each address
 
-    /// *** EVENTS ***
+    /// *** --- EVENTS --- ***
     event NewBid(address indexed bidder, uint256 amount); /// Emitted when a new bid is placed
     event CancelBid(address indexed bidder, uint256 amount); /// Emitted when a bid is cancelled and withdrawn
     event AuctionEnded(address winner, uint256 amount); /// Emitted when the auction ends

@@ -1,0 +1,307 @@
+{
+	"compiler": {
+		"version": "0.8.0+commit.c7dfd78e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "winner",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "AuctionEnded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "bidder",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "CancelBid",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "bidder",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "NewBid",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "bids",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "endAuction",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getContractBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "bidder",
+						"type": "address"
+					}
+				],
+				"name": "getWithdrawableBid",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "hasEnded",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "master",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "placeBid",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "topAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "topBid",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withdrawBid",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "The contract uses a mapping to track withdrawable bids and includes reentrancy protection",
+			"kind": "dev",
+			"methods": {
+				"constructor": {
+					"details": "Sets the deployer as the master of the auction"
+				},
+				"endAuction()": {
+					"details": "Only callable by masterImplements secure ETH transfer to master"
+				},
+				"getContractBalance()": {
+					"details": "Useful for debugging and verification",
+					"returns": {
+						"_0": "uint256 Balance in wei"
+					}
+				},
+				"getWithdrawableBid(address)": {
+					"details": "Can be used by UI to show withdrawable amounts",
+					"params": {
+						"bidder": "Address to check for withdrawable bid"
+					},
+					"returns": {
+						"_0": "uint256 Withdrawable amount in wei"
+					}
+				},
+				"placeBid()": {
+					"details": "Automatically stores previous top bid for withdrawalImplements bid verification and updates state"
+				},
+				"withdrawBid()": {
+					"details": "Implements checks and reentrancy protectionUses low-level call for ETH transfer"
+				}
+			},
+			"stateVariables": {
+				"topAddress": {
+					"details": "Master address that controls the auction"
+				}
+			},
+			"title": "Auction Smart Contract",
+			"version": 1
+		},
+		"userdoc": {
+			"events": {
+				"AuctionEnded(address,uint256)": {
+					"notice": "Emitted when a bid is cancelled and withdrawn"
+				},
+				"CancelBid(address,uint256)": {
+					"notice": "Emitted when a new bid is placed"
+				},
+				"NewBid(address,uint256)": {
+					"notice": "*** EVENTS ***"
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"bids(address)": {
+					"notice": "indicating if the auction has concluded"
+				},
+				"endAuction()": {
+					"notice": "Ends the auction and transfers the winning bid to master"
+				},
+				"getContractBalance()": {
+					"notice": "Returns the current balance of the contract"
+				},
+				"getWithdrawableBid(address)": {
+					"notice": "Returns the withdrawable bid amount for a given address"
+				},
+				"hasEnded()": {
+					"notice": "Current highest bid amount in wei"
+				},
+				"master()": {
+					"notice": "*** VARIBLES ***"
+				},
+				"placeBid()": {
+					"notice": "Allows bidders to place new bids"
+				},
+				"topBid()": {
+					"notice": "Address of the current highest bidder"
+				},
+				"withdrawBid()": {
+					"notice": "Allows bidders to withdraw their outbid amounts"
+				}
+			},
+			"notice": "This contract implements a simple auction system where bidders can place and withdraw bids",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Auction.sol": "Auction"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Auction.sol": {
+			"keccak256": "0xeb73dc508f54a82568b8c60eba9b8960f74c17d09482f2ec6ed282cda1b68ab3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0e4b5b91131e6e3eb1b0e8c3d54e19da1c7ce969ee6d806954283477d7af1ac2",
+				"dweb:/ipfs/QmNxgtwQBoLQFY8UEEofWoRkwXdrjjw6JDaf4GjsG8QW74"
+			]
+		}
+	},
+	"version": 1
+}
